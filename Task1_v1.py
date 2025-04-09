@@ -4,7 +4,7 @@ import numpy as np
 import seaborn as sns
 import re
 
-#Make sure you update file paths to your local situation (Line 13, Line 207)
+#Make sure you update file paths to your local situation (Line 13, Line 211)
 #We need to find a way to clean the really messy birthday and time to bed columns
 #K-nearest neighbor approximation or any other method you like is an open task for method 2 of 1B, if someone wants to take a look at that
 #All my reporitng of figures and results for the report is still at the preliminary level
@@ -175,6 +175,20 @@ df.iloc[:, 1] = df.iloc[:, 1].apply(lambda x: np.nan if is_missing(x) else x)
 df.iloc[:, 14] = df.iloc[:, 14].apply(lambda x: np.nan if is_missing(x) else x)
 df.iloc[:, 15] = df.iloc[:, 15].apply(lambda x: np.nan if is_missing(x) else x)
 
+#Method 1: Unknown Categorical, Mean Numerical Missing Values
+for col in numeric_cols:
+    mean_value = df[col].mean(skipna=True)
+    mean_value_rounded = round(mean_value, 2)  # round to 2 decimals
+    df[col].fillna(mean_value_rounded, inplace=True)
+
+categorical_cols = df.select_dtypes(include=['object']).columns.tolist()
+
+for col in categorical_cols:
+    df[col] = df[col].fillna('unknown') 
+
+#Method 2: K-Neirghest Neighbor Approximation
+
+
 for col in numeric_cols:
     plt.figure()
     df[col].plot(kind='box')
@@ -193,19 +207,6 @@ plt.figure(figsize=(8, 6))
 sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
 plt.title('Correlation Matrix after Cleaning')
 plt.show()
-
-#Method 1: Unknown Categorical, Mean Numerical Missing Values
-for col in numeric_cols:
-    mean_value = df[col].mean(skipna=True)
-    mean_value_rounded = round(mean_value, 2)  # round to 2 decimals
-    df[col].fillna(mean_value_rounded, inplace=True)
-
-categorical_cols = df.select_dtypes(include=['object']).columns.tolist()
-
-for col in categorical_cols:
-    df[col] = df[col].fillna('unknown') 
-
-#Method 2: K-Neirghest Neighbor Approximation
 
 output_path = "/Users/georgepetropoulos/Desktop/cleaned_ODI-2025.csv"
 df.to_csv(output_path, index=False)
