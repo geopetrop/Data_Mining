@@ -128,13 +128,16 @@ def clean_stress_level(series):
 
 def clean_hours_sports(series):
     """
-    Parse into numeric and clamp to [0, 168].
+    Parse into numeric and clamp to [0, 60].
     """
     parsed = series.apply(parse_numeric_value).astype(float)
     parsed = parsed.clip(lower=0, upper=60)
     return parsed
 
 def clean_students_in_room(series):
+    """
+    Parse into numeric and treat negative entries as NaN.
+    """
     parsed = series.apply(parse_numeric_value).astype(float)
     parsed.loc[parsed < 0] = np.nan
     return parsed
@@ -148,7 +151,7 @@ df.iloc[:, 12] = clean_iqr(df.iloc[:, 12], parse_numeric_value, iqr_factor=1.5)
 
 def is_missing(value):
     """
-    Decides if the value should be considered missing (NaN):
+    Decides if the value should be considered missing:
       1. Empty or known placeholders.
       2. No letters at all.
       3. More than 3 'invalid' characters (anything not a-z, A-Z, '!', or '?' -- ignoring whitespace).
