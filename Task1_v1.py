@@ -4,7 +4,7 @@ import numpy as np
 import seaborn as sns
 import re
 
-#Make sure you update file paths to your local situation (Line 13, Line 175)
+#Make sure you update file paths to your local situation (Line 13, Line 207)
 #We need to find a way to clean the really messy birthday and time to bed columns
 #K-nearest neighbor approximation or any other method you like is an open task for method 2 of 1B, if someone wants to take a look at that
 #All my reporitng of figures and results for the report is still at the preliminary level
@@ -175,9 +175,6 @@ df.iloc[:, 1] = df.iloc[:, 1].apply(lambda x: np.nan if is_missing(x) else x)
 df.iloc[:, 14] = df.iloc[:, 14].apply(lambda x: np.nan if is_missing(x) else x)
 df.iloc[:, 15] = df.iloc[:, 15].apply(lambda x: np.nan if is_missing(x) else x)
 
-output_path = "/Users/georgepetropoulos/Desktop/cleaned_ODI-2025.csv"
-df.to_csv(output_path, index=False)
-
 for col in numeric_cols:
     plt.figure()
     df[col].plot(kind='box')
@@ -206,3 +203,6 @@ for col in categorical_columns:
     df[col].fillna('unknown', inplace=True)
 
 #Method 2: K-Neirghest Neighbor Approximation
+
+output_path = "/Users/georgepetropoulos/Desktop/cleaned_ODI-2025.csv"
+df.to_csv(output_path, index=False)
