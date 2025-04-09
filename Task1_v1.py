@@ -178,12 +178,12 @@ df.iloc[:, 15] = df.iloc[:, 15].apply(lambda x: np.nan if is_missing(x) else x)
 for col in numeric_cols:
     plt.figure()
     df[col].plot(kind='box')
-    plt.title(f'Boxplot of {col}')
+    plt.title(f'Boxplot {col} after Clearning')
     plt.ylabel('Value')
     plt.show()
     plt.figure()
     df[col].hist(bins=20)
-    plt.title(f'Histogram of {col}')
+    plt.title(f'Histogram {col} after Cleaning')
     plt.xlabel('Value')
     plt.ylabel('Frequency')
     plt.show()
@@ -191,7 +191,7 @@ for col in numeric_cols:
 corr_matrix = df[numeric_cols].corr(method='pearson')
 plt.figure(figsize=(8, 6))
 sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
-plt.title('Correlation Matrix')
+plt.title('Correlation Matrix after Cleaning')
 plt.show()
 
 #Method 1: Unknown Categorical, Mean Numerical Missing Values
