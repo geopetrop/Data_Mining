@@ -4,6 +4,11 @@ import numpy as np
 import seaborn as sns
 import re
 
+#Make sure you update file paths to your local situation (Line 13, Line 175)
+#We need to find a way to clean the really messy birthday and time to bed columns
+#K-nearest neighbor approximation or any other method you like is an open task for method 2 of 1B, if someone wants to take a look at that
+#All my reporitng of figures and results for the report is still at the preliminary level
+
 #Task 1A
 df = pd.read_csv("/Users/georgepetropoulos/Desktop/DMT/ODI-2025.csv", sep = ';')
 numeric_cols = [
