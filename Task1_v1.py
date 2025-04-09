@@ -42,7 +42,7 @@ plt.show()
 
 
 #Task 1B
-NUMBER_WORDS = {
+number_words = {
     'zero': 0.0,
     'one': 1.0,
     'two': 2.0,
@@ -68,8 +68,8 @@ def parse_numeric_value(val):
     if not val:
         return None
 
-    if val in NUMBER_WORDS:
-        return NUMBER_WORDS[val]
+    if val in number_words:
+        return number_words[val]
 
     #Check for range like "180-200"
     range_match = re.match(r'^(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)$', val)
