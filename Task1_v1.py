@@ -178,7 +178,7 @@ df.iloc[:, 15] = df.iloc[:, 15].apply(lambda x: np.nan if is_missing(x) else x)
 #Method 1: Unknown Categorical, Mean Numerical Missing Values
 for col in numeric_cols:
     mean_value = df[col].mean(skipna=True)
-    mean_value_rounded = round(mean_value, 2)  # round to 2 decimals
+    mean_value_rounded = round(mean_value, 2)
     df[col].fillna(mean_value_rounded, inplace=True)
 
 categorical_cols = df.select_dtypes(include=['object']).columns.tolist()
