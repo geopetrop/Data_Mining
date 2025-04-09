@@ -203,6 +203,6 @@ for col in numeric_cols:
     df[col].fillna(mean_value, inplace=True)
 
 for col in categorical_columns:
-    df[col].fillna('Unknown', inplace=True)
+    df[col].fillna('unknown', inplace=True)
 
 #Method 2: K-Neirghest Neighbor Approximation
