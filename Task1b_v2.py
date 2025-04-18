@@ -8,9 +8,12 @@ from sklearn.impute import KNNImputer
 from scipy.stats import skew
 
 #Final update to task 1B. I believe random imputation makes conceptual sense over simplying replacing missing categorical values with "unknown"
-#since we have multiple colums that are highly dispersed in their answers. This allows us to better preserve their distributions. For numerical attributes I chose
+#since we have multiple columns that are highly dispersed in their answers. This allows us to better preserve their distributions. For numerical attributes I chose
 #the mean_median approach, since there is very little correlation in our numerical columns Knn is overkill. Since a few of our numerical attributes displayed high skeweness
-#I added a choice determined by threshold to use either mean or median in how the missing data is replaced.
+#I added a choice determined by threshold to use either mean or median in how the missing data is replaced. You can view some plots
+#of the cleaned data if you uncomment the results section (line 270-292)
+
+#watch out to edit your file paths (line 19, 152, 293). 
 
 ###The time columns are still uncleaned, too messy!
 
