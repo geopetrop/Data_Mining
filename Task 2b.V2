@@ -1,0 +1,61 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+df = pd.read_csv('cleaned_ODI-2025.csv')
+
+columns_to_use = [
+    'What programme are you in?',
+    'Have you taken a course on information retrieval?',
+    'Have you taken a course on statistics?',
+    'Have you taken a course on databases?',
+    'What is your gender?',
+    'How many hours per week do you do sports (in whole hours)? ',
+    'What is your stress level (0-100)?',
+    'Have you taken a course on machine learning?'
+]
+
+df_model = df[columns_to_use].dropna()
+
+label_encoders = {}
+for col in df_model.columns:
+    le = LabelEncoder()
+    df_model[col] = le.fit_transform(df_model[col].astype(str))
+    label_encoders[col] = le
+
+X = df_model.drop(columns='Have you taken a course on machine learning?')
+y = df_model['Have you taken a course on machine learning?']
+
+# Split data into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Hyperparameter tuning for Decision Tree
+best_tree_acc = 0
+best_depth = None
+for depth in [2, 3, 4, 5, None]:
+    tree = DecisionTreeClassifier(max_depth=depth, random_state=42)
+    tree.fit(X_train, y_train)
+    acc = accuracy_score(y_test, tree.predict(X_test))
+    print(f"Decision Tree (max_depth={depth}): Accuracy = {acc:.2%}")
+    if acc > best_tree_acc:
+        best_tree_acc = acc
+        best_depth = depth
+
+print(f"\nBest Decision Tree accuracy: {best_tree_acc:.2%} with max_depth={best_depth}")
+
+# Hyperparameter tuning for k-NN
+best_knn_acc = 0
+best_k = None
+for k in [3, 5, 7, 9]:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(X_train, y_train)
+    acc = accuracy_score(y_test, knn.predict(X_test))
+    print(f"k-NN (k={k}): Accuracy = {acc:.2%}")
+    if acc > best_knn_acc:
+        best_knn_acc = acc
+        best_k = k
+
+print(f"\nBest k-NN accuracy: {best_knn_acc:.2%} with k={best_k}")
